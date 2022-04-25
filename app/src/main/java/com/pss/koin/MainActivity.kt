@@ -6,6 +6,7 @@ import android.util.Log
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 class MainActivity : AppCompatActivity() {
@@ -29,13 +30,14 @@ class MainActivity : AppCompatActivity() {
                     single { Cpu("i5") }
 
                     //필요할 때마다 새로 생성
-                    factory { Computer("HP") }
+                    factory(named("Dell")) { Computer("Dell") }
+                    factory(named("HP")) { Computer("HP") }
                 }
             )
         }
 
         val cpu by inject<Cpu>()
-        val computer by inject<Computer>()
+        val computer by inject<Computer>(named("HP"))
 
         Log.d("로그","${cpu.name}, ${computer.name}")
     }
