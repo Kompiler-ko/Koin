@@ -32,13 +32,15 @@ class MainActivity : AppCompatActivity() {
                     //필요할 때마다 새로 생성
                     factory(named("Dell")) { Computer("Dell") }
                     factory(named("HP")) { Computer("HP") }
+                    single { User(get(named("Dell"))) }
                 }
             )
         }
 
         val cpu by inject<Cpu>()
         val computer by inject<Computer>(named("HP"))
+        val user by inject<User>()
 
-        Log.d("로그","${cpu.name}, ${computer.name}")
+        Log.d("로그","${cpu.name}, ${computer.name}, ${user.computer.name}")
     }
 }
